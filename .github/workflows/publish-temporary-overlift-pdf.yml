@@ -1,0 +1,35 @@
+name: Publish Temporary Overlift PDF
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'pdf-release-trigger.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out artifact branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Publish temporary direct-download release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          test -f Overlift-NES-Master-Engineering-Handoff.pdf
+          gh release delete overlift-nes-handoff-temp --repo "${{ github.repository }}" --cleanup-tag --yes || true
+          git tag -f overlift-nes-handoff-temp
+          git push origin refs/tags/overlift-nes-handoff-temp --force
+          gh release create overlift-nes-handoff-temp \
+            Overlift-NES-Master-Engineering-Handoff.pdf \
+            --repo "${{ github.repository }}" \
+            --title "Temporary Overlift NES Master Engineering Handoff" \
+            --notes "Temporary generated handoff artifact for download."
