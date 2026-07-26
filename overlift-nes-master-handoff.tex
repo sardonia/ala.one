@@ -1,0 +1,627 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=0.68in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{multicol}
+\usepackage{fancyvrb}
+
+\definecolor{onyx}{HTML}{12101A}
+\definecolor{ink}{HTML}{211C2B}
+\definecolor{violet}{HTML}{7C3AED}
+\definecolor{magenta}{HTML}{D946EF}
+\definecolor{electric}{HTML}{2563EB}
+\definecolor{silver}{HTML}{E7E5EA}
+\definecolor{mist}{HTML}{F6F3FA}
+\definecolor{success}{HTML}{0F766E}
+\definecolor{warning}{HTML}{B45309}
+\definecolor{danger}{HTML}{B91C1C}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=violet,
+  urlcolor=electric,
+  pdftitle={Overlift NES Master Engineering Handoff},
+  pdfauthor={Sean Findley / Overlift Studio},
+  pdfsubject={Completed iterations, canonical merge plan, cartridge matrix, and future compatibility waves}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{violet}{\textbf{OVERLIFT NES}}}
+\fancyhead[R]{\textcolor{gray}{Master Engineering Handoff}}
+\fancyfoot[L]{\textcolor{gray}{Prepared July 26, 2026}}
+\fancyfoot[R]{\textcolor{gray}{\thepage}}
+\setlength{\headheight}{14pt}
+
+\titleformat{\section}{\Large\bfseries\color{violet}}{\thesection}{0.55em}{}
+\titleformat{\subsection}{\large\bfseries\color{ink}}{\thesubsection}{0.55em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{electric}}{}{0pt}{}
+\setlist[itemize]{leftmargin=1.25em,itemsep=2pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=2pt,topsep=3pt}
+\renewcommand{\arraystretch}{1.16}
+\setlength{\LTpre}{4pt}
+\setlength{\LTpost}{4pt}
+
+\newcommand{\pill}[2]{\colorbox{#1!14}{\textcolor{#1}{\textbf{\strut #2}}}}
+\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\callout}[2]{%
+\noindent\fcolorbox{violet!70}{mist}{\begin{minipage}{0.94\linewidth}
+\textbf{\textcolor{violet}{#1}}\par\smallskip #2
+\end{minipage}}\par\medskip}
+\newcommand{\gate}[1]{\textcolor{success}{\textbf{PASS}} --- #1}
+\newcommand{\pending}[1]{\textcolor{warning}{\textbf{PENDING}} --- #1}
+
+\begin{document}
+
+\begin{titlepage}
+\pagecolor{onyx}\color{white}
+\vspace*{0.7in}
+{\Huge\bfseries OVERLIFT NES\par}
+\vspace{0.12in}
+{\LARGE\textcolor{magenta}{Master Engineering Handoff}\par}
+\vspace{0.22in}
+{\large Completed iterations, current branch state, cartridge test library, and the compatibility waves ahead\par}
+
+\vspace{0.55in}
+\fcolorbox{magenta}{onyx}{\begin{minipage}{0.88\textwidth}
+\vspace{0.14in}
+\textbf{Current canonical target}\par
+\vspace{0.06in}
+{\Large Iteration 02B.4A / 02B.4B}\par
+\vspace{0.08in}
+Unify the three strongest source branches, integrate every valid supplied cartridge into one private shelf, rebuild TypeScript and C11/WebAssembly from source, relock the anchor games, and produce one canonical private download plus one ROM-free public engine package.
+\vspace{0.14in}
+\end{minipage}}
+
+\vfill
+\begin{tabularx}{\textwidth}{>{\bfseries}p{1.8in}X}
+Core language & C11 compiled to WebAssembly \\
+Browser application & TypeScript, dedicated emulator worker, AudioWorklet \\
+Host & .NET 10 MVC \\
+Renderer ladder & WebGPU $\rightarrow$ WebGL2 $\rightarrow$ Canvas 2D \\
+Private test shelf & 38 intended entries from owner-supplied cartridge backups \\
+Primary quality goal & Liquid authentic cadence and an evidence-based path to 1,000 playable games \\
+Studio/remaster tooling & Explicitly deferred until emulator compatibility and cadence are mature \\
+\end{tabularx}
+
+\vfill
+{\small Prepared for Sean Findley and the next Overlift NES engineering chat\par}
+{\small July 26, 2026\par}
+\end{titlepage}
+\nopagecolor\color{black}
+
+\tableofcontents
+\newpage
+
+\section{Executive Snapshot}
+
+\callout{The central truth}{Overlift NES is no longer a speculative shell. It has three real playable anchors, a clean-room C11/WebAssembly core, modern four-controller support, a hardened AudioWorklet path, explicit DMA and PPU timing improvements, a three-tier renderer, and excellent measured Kid Icarus core headroom. The immediate engineering risk is branch divergence, not feasibility.}
+
+\begin{tabularx}{\textwidth}{>{\bfseries\color{ink}}p{1.65in}X}
+Current state & Three valuable branches contain non-overlapping advances and must be reconciled before further mapper expansion. \\
+Immediate delivery & One canonical private project ZIP containing the unified source and every valid supplied game; one public ZIP containing zero ROMs. \\
+Validated anchors & Castlevania III (MMC5), Batman: Return of the Joker (FME-7), and Kid Icarus (MMC1). \\
+Performance evidence & Kid Icarus averaged roughly 2.02--2.05 ms per authoritative emulated frame in two matching 54,500-frame runs, providing more than eight times real-time machine-core headroom in the validation environment. \\
+Compatibility policy & A recognized header or visible title screen is not a pass. Only documented playable checkpoints, stable audio/video/input, deterministic repeat runs, save verification where relevant, and soak evidence count. \\
+Content policy & Commercial backups stay private and outside \code{wwwroot}; public deployment and public source packages contain zero ROMs. \\
+\end{tabularx}
+
+\subsection{Settled architecture}
+
+\begin{center}
+\fcolorbox{silver}{mist}{\begin{minipage}{0.92\linewidth}
+\centering
+\textbf{.NET 10 MVC host}\par
+$\downarrow$\par
+\textbf{TypeScript application shell}\par
+$\swarrow$ \hspace{1.0in} $\downarrow$ \hspace{1.0in} $\searrow$\par
+Dedicated emulator worker \hspace{0.25in} Renderer ladder \hspace{0.25in} AudioWorklet\par
+$\downarrow$ \hspace{1.3in} $\downarrow$ \hspace{1.3in} $\downarrow$\par
+C11 $\rightarrow$ WASM \hspace{0.25in} WebGPU/WebGL2/Canvas \hspace{0.25in} PCM/resampling/recovery
+\end{minipage}}
+\end{center}
+
+The emulation clock is authoritative. CPU, PPU, APU, DMA, mapper state, input sampling, and deterministic hashes belong to the machine core. Presentation may drop obsolete display frames or interpolate cosmetic values, but it may never alter game timing, collision, scoring, AI, RNG, or audio pitch.
+
+\section{Non-Negotiable Project Decisions}
+
+\begin{longtable}{>{\bfseries}p{1.75in}p{5.55in}}
+\toprule
+Area & Standing decision \\
+\midrule
+\endhead
+NES machine core & C11. Do not rewrite the NES core in Rust. WebAssembly is the browser boundary. \\
+Browser runtime & TypeScript application and worker protocol; no JavaScript call per emulated instruction. \\
+Host & .NET 10 MVC with a simple local \code{dotnet run} experience. \\
+Build & \code{dotnet run}, \code{dotnet build}, and \code{dotnet publish} must compile current TypeScript and current C/WASM source offline after one-time toolchain setup. \\
+Execution & Deterministic machine work stays in a dedicated Web Worker. \\
+Audio & AudioWorklet delivery is independent of the visual render loop. Sound defaults to On/armed and resumes on the first valid browser gesture. \\
+Rendering & WebGPU primary, WebGL2 GPU fallback, Canvas 2D authentic-output fallback. \\
+Controllers & Four simultaneous modern controllers through an emulated NES Four Score; keyboard fallback remains on player one. \\
+Compatibility & Generic cartridge-board implementations only. No game-specific hacks disguised as mapper support. \\
+Diagnostics & Demand-driven. Detailed streams run only while Diagnostics is open; hidden performance telemetry is shut off. \\
+Packaging & Lean source ZIPs; exclude screenshots, caches, \code{node\_modules}, \code{bin}, \code{obj}, and generated build output. \\
+Public/private boundary & Private development packages may contain the owner's supplied backups. Public packages and deployment output contain zero ROMs and no \code{PrivateCartridges} directory. \\
+Studio & Tile/sprite inspectors, semantic profiles, and remaster authoring remain deferred. \\
+\bottomrule
+\end{longtable}
+
+\section{Completed Iteration Ledger}
+
+\subsection{Iteration 01 --- Mapper-first foundation}
+\begin{itemize}
+\item Converted the supplied .NET 10 MVC project into a custom Overlift NES application.
+\item Removed the template \code{lib} directory, Bootstrap, and jQuery.
+\item Built a clean-room C11-to-WebAssembly core with initial 2A03 CPU, 2C02 PPU, APU, controllers, OAM DMA, and a mapper registry.
+\item Added Mapper 5 / MMC5 for Castlevania III and Mapper 69 / Sunsoft FME-7 for Batman.
+\item Reached Batman first-stage output and Castlevania III opening/title execution.
+\item Established strict private/public cartridge separation.
+\end{itemize}
+
+\subsection{Iteration 02 --- MMC5 first stage and Four Score}
+\begin{itemize}
+\item Fixed MMC5 scanline/frame-state handling and reached Castlevania III's authentic first stage.
+\item Added four browser controller ports and real Four Score serialization on \code{\$4016}/\code{\$4017}.
+\item Added stable assignments for Xbox, XInput, DualShock 4, DualSense, Switch Pro, exposed Joy-Cons, 8BitDo, and generic standard-mapped USB/Bluetooth controllers.
+\item Added conservative PlayStation/Nintendo raw-layout fallbacks and keyboard/touch fallback on player one.
+\item Preserved Batman's first-stage checkpoint.
+\end{itemize}
+
+\subsection{Iteration 02A series --- Build, renderer, UI, and audio hardening}
+
+\begin{longtable}{p{1.05in}p{6.2in}}
+\toprule
+Revision & Completed work \\
+\midrule
+\endhead
+02A & Detected Apple Clang installations that parse \code{--target=wasm32} but lack a WebAssembly backend. Prevented optional compiler diagnostics from being misread as MSBuild errors. \\
+02A.1 & Reduced the television tube to about 75\% desktop width, added the \textbf{WASM and WEBGPU} badge, truthful runtime provenance, visible cartridge boot progress, and WebGPU black-frame validation. \\
+02A.2--02A.4 & Replaced the background-rendering shortcut with PPU fetches and shifters, fixing the global background/sprite alignment defect. Added WebGPU $\rightarrow$ WebGL2 $\rightarrow$ Canvas fallback and strict source compilation for run/build/publish. \\
+02A.5 & Split local WASM production into explicit Homebrew LLVM compile and LLD/\code{wasm-ld} link phases. Added independent compiler/linker discovery and actionable logs. \\
+02A.6 & Removed generated evidence images and unnecessary TypeScript distribution files, reducing private handoffs from more than 10 MiB to roughly 2 MiB without sacrificing offline source compilation. \\
+02A.7 & Repaired macOS Bash 3.2 array/nounset behavior and improved paths containing spaces. \\
+02A.8 & Removed Bash from the \code{dotnet run} critical path. \code{Scripts/prepare-assets.mjs} became the source-build authority. \\
+02A.9 & Moved CPU/frame/hash/FPS telemetry out of the game tube; added the retractable performance drawer, 1\% and 0.1\% lows, sparklines, cabinet-side modal controls, blurred pause modals, demand-driven diagnostics, sound default On, and a major base-APU/AudioWorklet sweep. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Mapper and audio long-play hardening branch}
+\begin{itemize}
+\item Corrected MMC5 ExRAM modes, nametable writes, IRQ acknowledge behavior, scanline recognition, CHR register selection, and battery-backed PRG-RAM preservation.
+\item Corrected FME-7 IRQ clock/output gating, underflow behavior, acknowledge semantics, RAM/ROM selection, and mirroring tests.
+\item Added deterministic multi-checkpoint routes for Castlevania III and Batman.
+\item Confirmed meaningful activity on all five standard NES APU channels in the tested routes.
+\end{itemize}
+
+\subsection{Iteration 02B.2 --- DMA and PPU edge hardening}
+\begin{itemize}
+\item Replaced immediate OAM DMA copying with an explicit 513/514-cycle state machine including dummy and parity-alignment cycles.
+\item Scheduled DMC sample fetches with parity-dependent three/four-cycle behavior.
+\item Added common DMC/OAM collision handling and explicit counters.
+\item Added a two-PPU-dot NMI pending window and vblank-boundary suppression/cancellation behavior.
+\item Preserved PPU open-bus high bits on palette PPUDATA reads.
+\item Improved OAMDATA reads during rendering and continued sprite evaluation beyond eight accepted sprites.
+\item Added 54,089-frame emulated-time soaks for Castlevania III and Batman with no CPU jam and no audio-ring overrun.
+\item Isolated native test temporary directories to prevent interrupted/concurrent evidence contamination.
+\end{itemize}
+
+\subsection{Iteration 02B.3A --- Controller and host-audio lifecycle}
+\begin{itemize}
+\item Prevented a different controller from hijacking a disconnected controller's reserved port.
+\item Allowed a known device to reclaim its original port after reconnecting under a changed browser index.
+\item Kept Four Score topology stable while players three/four are disconnected but reserved.
+\item Replaced five independent input messages with one atomic sequenced four-port snapshot.
+\item Released keyboard, touch, and gamepad state before modal, hidden-tab, pagehide, and freeze pauses; repolled before resume to eliminate sticky input.
+\item Drained both the core PCM ring and AudioWorklet queue during pause/load/reset/resume.
+\item Added AudioWorklet processor, closed AudioContext, default output-device, bfcache, and page-freeze recovery.
+\item Added short attack/release ramps to reduce pause/resume clicks.
+\end{itemize}
+
+\subsection{Kid Icarus branch --- MMC1, canonical hashes, and frame transport}
+\callout{Numbering note}{This branch was also labeled 02B.1, colliding with an earlier mapper-hardening package. In the canonical merge and future discussions, call it the \textbf{Kid Icarus branch}.}
+\begin{itemize}
+\item Added generic Mapper 1 / MMC1 serial loading, bit-7 reset, RMW consecutive-write suppression, all mirroring modes, 32 KiB/16 KiB PRG modes, 8 KiB/split 4 KiB CHR modes, CHR-RAM writes, and PRG-RAM protection.
+\item Added SNROM behavior plus initial SOROM, SUROM, and SXROM banking groundwork.
+\item Permanently added Kid Icarus and reached its first playable vertical chamber with movement, jumping, and firing.
+\item Replaced raw-structure state hashing with canonical field-by-field little-endian hashing and exposed CPU, PPU, APU, mapper, and whole-machine hashes.
+\item Added a bounded three/four-buffer transferable framebuffer pool, superseded-frame recycling, stale-presentation dropping without skipping machine work, and high-refresh duplicate GPU-submission suppression.
+\item Fixed immediate one-time redraw after presentation-mode changes.
+\end{itemize}
+
+\section{Validated Anchor Games}
+
+\begin{tabularx}{\textwidth}{>{\bfseries}p{1.8in}p{1.1in}p{1.0in}X}
+\toprule
+Game & Mapper & Frame & Locked evidence \\
+\midrule
+Castlevania III: Dracula's Curse & 5 / MMC5 & 3,000 & Framebuffer \code{8ab13b1e20a49e7c}; 02B.2 state \code{C4ABD5F8}; PCM 2,395,258 / \code{b0fe4f73e9773744}. \\
+Batman: Return of the Joker & 69 / FME-7 & 1,000 & Framebuffer \code{39d0f1bd48f30942}; 02B.2 state \code{C2743BEC}; PCM 797,889 / \code{8c68dcf178d10138}. \\
+Kid Icarus: Angel Land Story & 1 / MMC1 & 1,500 & Framebuffer \code{d99ebd822b0819bc}; canonical state \code{912ACFE3}; PCM 1,197,231 / \code{e01b0358d171c28f}. \\
+\bottomrule
+\end{tabularx}
+
+\callout{Relock after merge}{These state hashes are branch-specific. The unified 02B.4A core may legitimately change state hashes because ABI layout, mapper state, DMA state, or timing state changes. Preserve the known visual/audio behavior, then generate and document new canonical locks from the merged tree.}
+
+\section{Private Cartridge Test Library}
+
+The intended private shelf contains \textbf{38 entries}: three existing anchors and 35 newly supplied archives. All were already uploaded. The next chat must retrieve them from the conversation/Library and must not ask Sean to upload them again.
+
+\subsection{Existing anchors}
+\begin{multicols}{2}
+\begin{enumerate}
+\item Batman: Return of the Joker
+\item Castlevania III: Dracula's Curse
+\item Kid Icarus: Angel Land Story
+\end{enumerate}
+\end{multicols}
+
+\subsection{Uploaded batch A --- 15 archives}
+\begin{multicols}{2}
+\begin{enumerate}
+\item Megami Tensei --- English MMC3 Patch
+\item Lagrange Point
+\item Mouryou Senki Madara
+\item Akumajou Densetsu
+\item Gimmick!
+\item Micro Machines
+\item Marble Madness
+\item Battletoads
+\item Pin-Bot
+\item StarTropics
+\item Kirby's Adventure Rev A
+\item Deadly Towers
+\item Gumshoe
+\item IronSword: Wizards \& Warriors II
+\item Solstice
+\end{enumerate}
+\end{multicols}
+
+\subsection{Uploaded batch B --- 20 archives}
+\begin{multicols}{2}
+\begin{enumerate}
+\item Donkey Kong Classics
+\item Super Mario Bros. / Duck Hunt
+\item Final Fantasy I \& II
+\item Metroid
+\item Zelda II: The Adventure of Link
+\item A Boy and His Blob
+\item Nobunaga's Ambition II
+\item Nobunaga's Ambition
+\item Romance of the Three Kingdoms
+\item Dragon Warrior IV
+\item Dragon Warrior III
+\item Dragon Warrior II
+\item Dragon Warrior
+\item Teenage Mutant Ninja Turtles
+\item Mike Tyson's Punch-Out!!
+\item Contra
+\item Super Mario Bros. 2
+\item Super Mario Bros. 3
+\item The Legend of Zelda
+\item Dr. Mario Rev 1
+\end{enumerate}
+\end{multicols}
+
+\subsection{Mandatory ingestion metadata}
+For every valid candidate, generate and lock:
+\begin{multicols}{2}
+\begin{itemize}
+\item Display title and exact filename
+\item SHA-256 and CRC-32
+\item iNES or NES 2.0 format
+\item Mapper and submapper
+\item PRG-ROM and CHR-ROM sizes
+\item CHR-RAM and PRG-RAM requirements
+\item Battery/save type
+\item Trainer presence
+\item Mirroring and region
+\item Reset vector
+\item Current compatibility classification
+\end{itemize}
+\end{multicols}
+
+\callout{Megami Tensei special rule}{If the archive contains a complete patched \code{.nes} image, catalog it as a distinct modified build. If it contains only IPS/BPS/UPS patch data, quarantine it as \textbf{Base cartridge required}. Do not silently manufacture or distribute an unsupplied base image.}
+
+\section{Current Branch Divergence and Canonical Merge}
+
+\subsection{Three authoritative donors}
+\begin{tabularx}{\textwidth}{>{\bfseries}p{2.4in}X}
+\toprule
+Source package & Authority in the merge \\
+\midrule
+02B.3A Controller/Audio Lifecycle & Application/client base, worker lifecycle, atomic controller transport, controller reservation, sticky-input protection, host/core audio recovery. \\
+02B.2 DMA/PPU Edge Hardening & Machine-core timing donor: explicit OAM DMA, scheduled DMC DMA, collision handling, NMI pending/suppression, open bus, OAMDATA, sprite evaluation. \\
+Kid Icarus branch & MMC1/SxROM, Kid Icarus fixture/replay, canonical subsystem hashing, bounded frame transport, high-refresh duplicate-submission suppression. \\
+\bottomrule
+\end{tabularx}
+
+\subsection{Files that require reconciliation, not blind replacement}
+\begin{multicols}{2}
+\begin{itemize}
+\item \code{Core/C/nes\_core.c}
+\item \code{Core/C/nes\_core.h}
+\item \code{Client/src/main.ts}
+\item \code{Client/src/emu.worker.ts}
+\item \code{Client/src/protocol.ts}
+\item \code{Client/src/controller-bridge.ts}
+\item \code{Client/src/audio.worklet.ts}
+\item \code{Client/src/renderers/*}
+\item \code{Scripts/prepare-assets.mjs}
+\item \code{Tests/*}
+\item \code{PrivateCartridges/catalog.json}
+\item \code{nesgpu.csproj}
+\item \code{wwwroot/js/*}
+\item \code{wwwroot/wasm/overlift-nes-core.wasm}
+\item \code{wwwroot/build/runtime-manifest.json}
+\end{itemize}
+\end{multicols}
+
+\section{Immediate Planned Iterations}
+
+\subsection{02B.4A --- Canonical source merge}
+\textbf{Objective:} one source tree containing the strongest machine core, browser lifecycle, MMC1 work, canonical hashes, and frame transport.
+
+\textbf{Exit gates:}
+\begin{itemize}
+\item Core ABI reconciled and documented.
+\item Strict TypeScript build passes.
+\item C11 warning-clean native build passes.
+\item Fresh wasm32 object and \code{wasm-ld} module pass validation.
+\item Batman, Castlevania III, and Kid Icarus regressions pass from power-on.
+\item Controller/Four Score, controller lifecycle, AudioWorklet lifecycle, DMA/PPU, mapper, renderer-policy, and hidden-tab tests pass.
+\item \code{dotnet run} remains the one-command offline owner workflow.
+\end{itemize}
+
+\subsection{02B.4B --- Complete private shelf integration}
+\textbf{Objective:} safely extract every valid supplied image into \code{PrivateCartridges}, generate the exact catalog, and make every valid title visible in the Cartridges modal.
+
+\textbf{Exit gates:}
+\begin{itemize}
+\item Path traversal, nested executable, malformed-header, and duplicate payloads rejected.
+\item Patch-only inputs quarantined honestly.
+\item Unsupported titles remain visible with \textbf{Mapper recognized; implementation pending} rather than disappearing.
+\item Private ZIP contains the full validated shelf; public ZIP contains zero ROMs and no \code{PrivateCartridges} directory.
+\item Both final ZIPs are clean-extracted, checksum-verified, and their exact ROM counts reported.
+\end{itemize}
+
+\subsection{02B.4C --- Automated mapper census and boot sweep}
+Every valid image receives a common initial harness:
+
+\begin{center}
+Load $\rightarrow$ reset $\rightarrow$ 60 frames $\rightarrow$ 600 frames $\rightarrow$ deterministic Start $\rightarrow$ 1,800 frames $\rightarrow$ classify
+\end{center}
+
+Capture CPU jam, run-state faults, visible color count, framebuffer/state/audio hashes, channel activity, mapper identity, and first evidence of accepted input. A title screen is \emph{not} a playable classification.
+
+\section{Future Compatibility Waves}
+
+\subsection{Wave 1 --- Common discrete mappers}
+\textbf{Principal games:} Super Mario Bros./Duck Hunt, Contra, Donkey Kong Classics, Solstice, IronSword, Deadly Towers, Gumshoe.
+
+\textbf{Hardware targets:} NROM, UxROM/UNROM/UOROM, CNROM, AxROM, BNROM, GxROM, Camerica variants, one-screen mirroring, and bus-conflict behavior.
+
+\textbf{Gate:} generic mapper self-tests, native/WASM agreement, and at least one real playable checkpoint per board family without title-specific branches.
+
+\subsection{Wave 2 --- Complete MMC1/SxROM family}
+\textbf{Principal games:} Kid Icarus, The Legend of Zelda, Zelda II, Metroid, A Boy and His Blob, TMNT, Dragon Warrior I--IV, Nobunaga's Ambition I--II, Romance of the Three Kingdoms, Final Fantasy I \& II, Dr. Mario.
+
+\textbf{Hardware targets:} SEROM/SHROM, SNROM, SOROM, SUROM, SXROM, MMC1A/MMC1B distinctions, banked PRG-RAM, outer PRG banking, battery persistence, reset/power-cycle retention.
+
+\textbf{Kid Icarus butter gate:} doors, shops, item interactions, death/restart, password flow, vertical progression, fortress rooms, boss route, one-hour deterministic run, and physical browser A/V/controller acceptance.
+
+\subsection{Wave 3 --- MMC3, MMC6, and TQROM}
+\textbf{Principal games:} Super Mario Bros. 2, Super Mario Bros. 3, Kirby's Adventure, StarTropics, Pin-Bot, and a runnable Megami Tensei patched image.
+
+\textbf{Hardware targets:} qualified PPU A12 edge tracking, IRQ reload/acknowledge edges, PRG/CHR inversion, MMC6 RAM protection, TQROM CHR-ROM/CHR-RAM selection, status-bar splits, dense bank switching.
+
+\textbf{Gate:} multiple scrolling gameplay checkpoints, stable IRQ splits with no status shake, correct saves, and deterministic 15-minute runs.
+
+\subsection{Wave 4 --- Hostile PPU timing}
+\textbf{Principal games:} Battletoads, Marble Madness, Micro Machines, Mike Tyson's Punch-Out!!
+
+\textbf{Targets:} sprite-zero timing, 34th background-tile fetch behavior, mid-scanline CHR switching, rendering enable/disable edges, OAM reads during rendering, diagonal sprite-overflow bug, NMI/PPUDATA race cases, CPU/PPU phase alignment, CHR-RAM streaming.
+
+\subsection{Wave 5 --- Advanced Japanese mappers and expansion audio}
+\textbf{Principal games:} Akumajou Densetsu, Mouryou Senki Madara, Lagrange Point, Gimmick!, plus deeper Batman and Castlevania III routes.
+
+\textbf{Targets:} VRC6a/VRC6b wiring, VRC6 pulse/saw, VRC7 six-channel FM, Sunsoft 5B synthesis, MMC5 pulse/PCM conformance, base/expansion mixing, mapper IRQs, per-channel activity and PCM hashes.
+
+\subsection{Wave 6 --- CPU, bus, DMA, and full PPU conformance}
+\begin{itemize}
+\item Exact DMC conflicts with controller, PPU, and CPU reads.
+\item DMC/OAM overlap at all alignments and instruction bus ordering.
+\item Interrupt edge behavior and remaining CPU timing fixtures.
+\item Complete PPU register-race family, exact sprite overflow, odd-frame timing, mapper-visible PPU address timing.
+\item NTSC, PAL, and Dendy timing modes.
+\end{itemize}
+
+\subsection{Wave 7 --- Saves and deterministic state systems}
+Implement battery persistence, versioned save states, recorded input replay, rewind checkpoints, crash-safe IndexedDB/OPFS writes, state migration, and deterministic restore. The same state plus the same input must reproduce the same CPU, PPU, APU, mapper, framebuffer, and PCM hashes.
+
+\subsection{Wave 8 --- Liquid browser presentation}
+\begin{itemize}
+\item SharedArrayBuffer fast path when cross-origin isolated; transferable-buffer fallback everywhere else.
+\item Worker-owned deadlines and bounded catch-up behavior.
+\item No steady-state framebuffer allocations, unbounded queues, duplicate high-refresh uploads, or growing input latency.
+\item Audio remains independent of visual cadence.
+\item Stable 60/90/120/144 Hz and variable-refresh presentation.
+\item Tab suspension, AudioContext loss, output-device change, controller reconnect, and GPU-device-loss recovery.
+\item Thermal/battery-aware presentation policy that never lowers machine accuracy.
+\end{itemize}
+
+\textbf{Authentic-player acceptance targets:}
+\begin{center}
+\begin{tabular}{lr}
+Average presentation FPS & $\geq 59.5$ \\
+1\% low & $\geq 58$ FPS \\
+0.1\% low & $\geq 55$ FPS \\
+Recurring main-thread long tasks & 0 \\
+Sustained core audio underruns/overruns & 0 \\
+Unbounded frame/input/audio queue growth & 0 \\
+\end{tabular}
+\end{center}
+
+\subsection{Wave 9 --- Compatibility evidence ladder}
+\begin{center}
+\pill{violet}{25 deeply tested} $\rightarrow$ \pill{violet}{100} $\rightarrow$ \pill{violet}{250} $\rightarrow$ \pill{violet}{500} $\rightarrow$ \pill{magenta}{1,000 Playable}
+\end{center}
+
+A title counts as \textbf{Playable} only after verified identity, correct board classification, accepted input, a genuine gameplay checkpoint, acceptable graphics/audio, save verification where relevant, a deterministic repeat run, at least a 15-minute stability result, and no unresolved critical defect.
+
+\subsection{Wave 10 --- Release hardening}
+Cross-browser and cross-OS matrix; integrated-GPU and phone tiers; physical Xbox/PlayStation/Switch/Joy-Con/8BitDo sessions; eight-hour unattended soak; GPU/audio/controller recovery; source provenance; third-party notices; rights-cleared public content; and a production package with zero commercial ROMs.
+
+\subsection{Deferred wave --- Overlift Studio and remaster authoring}
+Do not begin tile/sprite inspectors, click-to-trace, semantic event authoring, replacement meshes, voxel profiles, or profile-pack tooling until the canonical emulator is unified, save systems are stable, cadence is liquid, and the compatibility matrix is substantial.
+
+\section{Build and Deployment Contract}
+
+The owner toolchain is:
+\begin{itemize}
+\item .NET 10 SDK
+\item Node.js
+\item Homebrew LLVM with wasm32 backend
+\item Homebrew LLD / \code{wasm-ld}
+\item Bundled TypeScript 5.8.3 compiler subset
+\end{itemize}
+
+Normal operation remains:
+\begin{center}
+\fcolorbox{violet}{mist}{\Large\texttt{cd nesgpu \quad\&\&\quad dotnet run}}
+\end{center}
+
+Expected chain:
+\begin{center}
+TypeScript source $\rightarrow$ browser JavaScript\par
+C11 source $\rightarrow$ wasm32 object $\rightarrow$ \code{wasm-ld} $\rightarrow$ validated WASM\par
+C\#/Razor $\rightarrow$ .NET 10 build $\rightarrow$ Kestrel launch
+\end{center}
+
+The source-build critical path must not depend on Bash. Compiler and linker arguments must remain safe for paths containing spaces. \code{dotnet publish -c Release} must invoke the same fresh asset build and fail when private content enters publish output.
+
+\section{Known Unfinished Boundaries}
+
+Do not claim completion of the following:
+\begin{multicols}{2}
+\begin{itemize}
+\item Exact bus microcycles for every CPU access
+\item Every DMC side-effecting read conflict
+\item Exact diagonal sprite overflow
+\item Full PPU register-race family
+\item Complete MMC1 board matrix
+\item MMC3/MMC6/TQROM
+\item Most discrete mapper families
+\item VRC6/VRC7 and Sunsoft 5B audio
+\item Complete MMC5 expansion audio
+\item PAL and Dendy timing
+\item Battery persistence
+\item Save states, replay, and rewind
+\item Famicom Disk System
+\item Physical controller acceptance matrix
+\item One unified 38-entry private package
+\item A 1,000-playable-game evidence claim
+\item Studio/remaster authoring
+\end{itemize}
+\end{multicols}
+
+\section{New-Chat Execution Starter}
+
+Paste the following into the new chat. It is intentionally operational rather than conversational.
+
+\begin{Verbatim}[fontsize=\footnotesize]
+Continue Overlift NES from the Master Engineering Handoff.
+
+This is a code, test, merge, and packaging task, not another planning response.
+
+Retrieve these existing source packages from my Library:
+1. Overlift.NES.Iteration-02B.3A-Controller-Audio-Lifecycle-Private.zip
+2. Overlift.NES.Iteration-02B.2-DMA-PPU-Edge-Hardening-Private.zip
+3. Overlift.NES.Iteration-02B.1-MMC1-Kid-Icarus-Frame-Pacing-Private.zip
+
+Retrieve every NES cartridge upload from both July 26 batches, plus Batman,
+Castlevania III, and Kid Icarus. Do not ask me to upload them again.
+
+Perform Iteration 02B.4A and 02B.4B.
+
+Use 02B.3A as the application/client base. Merge the 02B.2 DMA/PPU core.
+Merge the Kid Icarus branch's MMC1, canonical hashes, bounded framebuffer
+transport, high-refresh submission suppression, fixture, and tests.
+
+Do not blindly replace diverged files. Reconcile the C core/header, worker
+protocol, TypeScript client, renderer transport, AudioWorklet lifecycle,
+tests, project configuration, package scripts, and runtime manifests.
+
+Safely extract every valid .nes image into PrivateCartridges. Calculate SHA-256,
+CRC-32, header format, mapper, submapper, PRG/CHR sizes, RAM, battery, trainer,
+mirroring, region, and reset vector. Reject malformed, duplicate, traversal,
+nested executable, and patch-only payloads.
+
+Treat Megami Tensei - English MMC3 Patch honestly: include only a complete
+runnable .nes image; otherwise label it Base cartridge required.
+
+Generate the private cartridge catalog automatically. Show every valid entry
+in the Cartridges modal, including unsupported boards with an honest status.
+
+Recompile TypeScript and C11 to fresh WebAssembly. Rerun and relock Batman,
+Castlevania III, Kid Icarus, controller/Four Score, controller lifecycle,
+AudioWorklet lifecycle, DMA/PPU, mapper, and renderer tests.
+
+Preserve one-command offline build through: dotnet run
+
+Produce:
+1. One canonical private source ZIP with all current work and valid cartridges.
+2. One public engine ZIP containing zero ROMs and no PrivateCartridges folder.
+3. SHA-256 files for both ZIPs.
+4. A complete 02B.4A/02B.4B validation report.
+5. A generated cartridge inventory and initial mapper census.
+
+Studio, tile inspection, semantic authoring, and remaster work remain deferred.
+Do not report completion until the final private ZIP has been clean-extracted,
+its checksum manifest verified, and its exact ROM count confirmed.
+\end{Verbatim}
+
+\section{Final Acceptance Checklist}
+
+\begin{multicols}{2}
+\begin{itemize}[label=$\square$]
+\item Three branches retrieved
+\item All cartridge archives retrieved
+\item Canonical merge completed
+\item C core warning-clean
+\item TypeScript strict build passed
+\item Fresh WASM linked and validated
+\item Core ABI reconciled
+\item Batman regression passed
+\item Castlevania III regression passed
+\item Kid Icarus regression passed
+\item Controller lifecycle passed
+\item Audio lifecycle passed
+\item DMA/PPU tests passed
+\item Full private shelf generated
+\item Patch-only inputs quarantined
+\item Private ZIP generated
+\item Public ROM-free ZIP generated
+\item Both ZIPs clean-extracted
+\item Checksums verified
+\item Validation report attached
+\end{itemize}
+\end{multicols}
+
+\callout{Bottom line}{The emulator has already crossed the feasibility threshold. The next disciplined move is consolidation: merge the strongest three lines, integrate the full private test library, relock the three anchor games, and then advance mapper wave by mapper wave without sacrificing cadence, audio stability, or honest compatibility evidence.}
+
+\section*{Source Provenance for This Handoff}
+This document consolidates the completed Overlift NES validation reports, branch package records, owner-supplied cartridge inventory, and the supplied Overlift Studio technical design. The design principle remains: mature cores compile to WebAssembly, emulation timing is authoritative, the renderer is a consumer, and WebGPU ships with a real WebGL2/original fallback. Commercial cartridge data remains private; public packages remain engine-only and rights-clean.
+
+\end{document}
