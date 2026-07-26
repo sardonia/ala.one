@@ -1,0 +1,34 @@
+name: Temporary Overlift PDF Build
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'overlift-nes-master-handoff.tex'
+
+permissions:
+  contents: write
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Compile LaTeX handoff
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: overlift-nes-master-handoff.tex
+
+      - name: Commit compiled PDF to PR branch
+        shell: bash
+        run: |
+          mv overlift-nes-master-handoff.pdf Overlift-NES-Master-Engineering-Handoff.pdf
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Overlift-NES-Master-Engineering-Handoff.pdf
+          git commit -m "Build Overlift NES handoff PDF" || exit 0
+          git push origin HEAD:${{ github.head_ref }}
