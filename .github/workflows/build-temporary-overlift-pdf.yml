@@ -19,6 +19,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
+      - name: Add required LaTeX symbol package
+        shell: bash
+        run: |
+          sed -i '/\\usepackage{fancyvrb}/a \\usepackage{amssymb}' overlift-nes-master-handoff.tex
+
       - name: Compile LaTeX handoff
         id: compile
         continue-on-error: true
@@ -35,7 +40,7 @@ jobs:
           fi
 
       - name: Upload compiled PDF artifact
-        if: ${{ hashFiles('Overlift-NES-Master-Engineering-Handoff.pdf') != '' }}
+        if: steps.compile.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: Overlift-NES-Master-Engineering-Handoff
