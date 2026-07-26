@@ -22,7 +22,16 @@ jobs:
       - name: Add required LaTeX symbol package
         shell: bash
         run: |
-          sed -i '/\\usepackage{fancyvrb}/a \\usepackage{amssymb}' overlift-nes-master-handoff.tex
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('overlift-nes-master-handoff.tex')
+          text = path.read_text(encoding='utf-8')
+          marker = r'\usepackage{fancyvrb}'
+          addition = marker + '\n' + r'\usepackage{amssymb}'
+          if r'\usepackage{amssymb}' not in text:
+              text = text.replace(marker, addition, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
 
       - name: Compile LaTeX handoff
         id: compile
