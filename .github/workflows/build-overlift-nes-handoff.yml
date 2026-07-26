@@ -1,0 +1,36 @@
+name: Build Overlift NES Handoff PDF
+
+on:
+  push:
+    branches:
+      - chatgpt-artifacts-temp
+    paths:
+      - 'overlift-nes-master-handoff.tex'
+      - '.github/workflows/build-overlift-nes-handoff.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out temporary artifact branch
+        uses: actions/checkout@v4
+        with:
+          ref: chatgpt-artifacts-temp
+
+      - name: Compile LaTeX handoff
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: overlift-nes-master-handoff.tex
+
+      - name: Store compiled PDF on temporary branch
+        shell: bash
+        run: |
+          mv overlift-nes-master-handoff.pdf Overlift-NES-Master-Engineering-Handoff.pdf
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Overlift-NES-Master-Engineering-Handoff.pdf
+          git commit -m "Build Overlift NES handoff PDF" || exit 0
+          git push origin HEAD:chatgpt-artifacts-temp
