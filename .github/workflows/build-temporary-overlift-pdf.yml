@@ -5,6 +5,7 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - 'overlift-nes-master-handoff.tex'
+      - 'pdf-build-trigger.txt'
 
 permissions:
   contents: write
@@ -25,14 +26,29 @@ jobs:
         with:
           root_file: overlift-nes-master-handoff.tex
 
+      - name: Normalize PDF filename
+        if: always()
+        shell: bash
+        run: |
+          if [ -f overlift-nes-master-handoff.pdf ]; then
+            mv overlift-nes-master-handoff.pdf Overlift-NES-Master-Engineering-Handoff.pdf
+          fi
+
+      - name: Upload compiled PDF artifact
+        if: ${{ hashFiles('Overlift-NES-Master-Engineering-Handoff.pdf') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Overlift-NES-Master-Engineering-Handoff
+          path: Overlift-NES-Master-Engineering-Handoff.pdf
+          if-no-files-found: error
+
       - name: Commit PDF or diagnostics to PR branch
         if: always()
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [ -f overlift-nes-master-handoff.pdf ]; then
-            mv overlift-nes-master-handoff.pdf Overlift-NES-Master-Engineering-Handoff.pdf
+          if [ -f Overlift-NES-Master-Engineering-Handoff.pdf ]; then
             git add Overlift-NES-Master-Engineering-Handoff.pdf
           fi
           if [ -f overlift-nes-master-handoff.log ]; then
