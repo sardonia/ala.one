@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.1)  26 JUL 2026 17:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.7.1)  26 JUL 2026 17:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -457,26 +457,288 @@ Package: fancyvrb 2026/04/16 4.6a verbatim text (tvz,hv)
 \FV@StepNumber=\count327
 \FV@OutFile=\write3
 )
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
-./overlift-nes-master-handoff.tex:19: LaTeX Error: Missing \begin{document}.
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks29
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+Package hyperref Info: Option `colorlinks' set `true' on input line 39.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 67
+.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.19 u
-      sepackage{amssymb}
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+(/opt/texlive/texdir/texmf-dist/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+(/opt/texlive/texdir/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2026-02-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count328
+)
+(./overlift-nes-master-handoff.aux)
+\openout1 = `overlift-nes-master-handoff.aux'.
 
- 
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: letterpaper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(49.14307pt, 516.00887pt, 49.14307pt)
+* v-part:(T,H,B)=(49.14307pt, 696.68385pt, 49.14307pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=516.00887pt
+* \textheight=696.68385pt
+* \oddsidemargin=-23.12692pt
+* \evensidemargin=-23.12692pt
+* \topmargin=-60.12692pt
+* \headheight=14.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/opt/texlive/texdir/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count329
+\scratchdimen=\dimen256
+\scratchbox=\box110
+\nofMPsegments=\count330
+\nofMParguments=\count331
+\everyMPshowfont=\toks30
+\MPscratchCnt=\count332
+\MPscratchDim=\dimen257
+\MPnumerator=\count333
+\makeMPintoPDFobject=\count334
+\everyMPtoPDFconversion=\toks31
+)
+Package hyperref Info: Link coloring ON on input line 67.
+ (./overlift-nes-master-handoff.out) (./overlift-nes-master-handoff.out)
+\@outlinefile=\write4
+\openout4 = `overlift-nes-master-handoff.out'.
+
+LaTeX Info: Redefining \microtypecontext on input line 67.
+Package microtype Info: Applying patch `item' on input line 67.
+Package microtype Info: Applying patch `toc' on input line 67.
+Package microtype Info: Applying patch `eqnum' on input line 67.
+Package microtype Info: Applying patch `footnote' on input line 67.
+Package microtype Info: Applying patch `verbatim' on input line 67.
+LaTeX Info: Redefining \microtypesetup on input line 67.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using default protrusion set `alltext'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+Package microtype Info: Patching command `\showhyphens'.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of interword spacing.
+Package microtype Info: No adjustment of character kerning.
+
+(/opt/texlive/texdir/texmf-dist/tex/latex/microtype/mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
+(RS)
+)
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 8
+7.
+
+(/opt/texlive/texdir/texmf-dist/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 8
+7.
+
+(/opt/texlive/texdir/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+87.
+
+(/opt/texlive/texdir/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+87.
+
+(/opt/texlive/texdir/texmf-dist/tex/latex/lm/omxlmex.fd
+File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 87.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 87.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 87.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 87.
+
+
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+(/opt/texlive/texdir/texmf-dist/tex/latex/microtype/mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 87.
+
+
+(/opt/texlive/texdir/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+(/opt/texlive/texdir/texmf-dist/tex/latex/microtype/mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+) [1
+
+{/opt/texlive/texdir/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/opt/texlive
+/texdir/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/opt/texlive/texdir/texmf-dist
+/fonts/enc/dvips/lm/lm-mathsy.enc}] (./overlift-nes-master-handoff.toc)
+\tf@toc=\write5
+\openout5 = `overlift-nes-master-handoff.toc'.
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.107 \newpage
+               [1] (/opt/texlive/texdir/texmf-dist/tex/latex/lm/t1lmtt.fd)
+Overfull \hbox (35.56233pt too wide) in alignment at lines 141--145
+ [] [] 
+ []
+
+
+Overfull \hbox (35.56233pt too wide) in alignment at lines 145--160
+ [] [] 
+ []
+
+[2]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
+66.
+ (/opt/texlive/texdir/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Overfull \hbox (31.94862pt too wide) in alignment at lines 185--189
+ [] [] 
+ []
+
+
+Overfull \hbox (31.94862pt too wide) in alignment at lines 189--199
+ [] [] 
+ []
+
+[3{/opt/texlive/texdir/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 254--254
+[]|\T1/lmr/m/n/10 (+20) Framebuffer \T1/lmtt/m/n/9 8ab13b1e20a49e7c\T1/lmr/m/n/
+10 (+20) ; 02B.2
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--254
+\T1/lmr/m/n/10 (+20) state \T1/lmtt/m/n/9 C4ABD5F8\T1/lmr/m/n/10 (+20) ; PCM 2,
+395,258 /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--254
+[]|\T1/lmr/m/n/10 (+20) Framebuffer \T1/lmtt/m/n/9 39d0f1bd48f30942\T1/lmr/m/n/
+10 (+20) ; 02B.2
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--254
+\T1/lmr/m/n/10 (+20) state \T1/lmtt/m/n/9 C2743BEC\T1/lmr/m/n/10 (+20) ; PCM 79
+7,889 /
+ []
+
+
+Underfull \hbox (badness 6380) in paragraph at lines 254--254
+[]|\T1/lmr/m/n/10 (+20) Framebuffer \T1/lmtt/m/n/9 d99ebd822b0819bc\T1/lmr/m/n/
+10 (+20) ; canon-i-
+ []
+
+
+Underfull \hbox (badness 2326) in paragraph at lines 254--254
+\T1/lmr/m/n/10 (+20) cal state \T1/lmtt/m/n/9 912ACFE3\T1/lmr/m/n/10 (+20) ; PC
+M 1,197,231 /
+ []
+
+[5] [6] [7] [8]
+Overfull \hbox (1.73297pt too wide) in paragraph at lines 485--486
+\T1/lmr/m/n/10 (-20) Cross-browser and cross-OS ma-trix; integrated-GPU and pho
+ne tiers; phys-i-cal Xbox/PlayStation/Switch/Joy-Con/8BitDo
+ []
+
+[9{/opt/texlive/texdir/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/opt/texlive/te
+xdir/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}] [10] [11] [12]
+(./overlift-nes-master-handoff.aux)
+ ***********
+LaTeX2e <2026-06-01>
+L3 programming layer <2026-06-18>
+ ***********
+Package rerunfilecheck Info: File `overlift-nes-master-handoff.out' has not cha
+nged.
+(rerunfilecheck)             Checksum: 2924305C3EFE023D5DACAF06D21EEF7C;9954.
+ ) 
 Here is how much of TeX's memory you used:
- 12314 strings out of 467168
- 192212 string characters out of 5411585
- 658299 words of memory out of 5000000
- 41491 multiletter control sequences out of 15000+600000
- 628484 words of font info for 41 fonts, out of 8000000 for 9000
+ 14200 strings out of 467168
+ 223694 string characters out of 5411585
+ 706387 words of memory out of 5000000
+ 43036 multiletter control sequences out of 15000+600000
+ 686194 words of font info for 148 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 74i,0n,83p,542b,103s stack positions out of 10000i,1000n,20000p,200000b,200000s
-./overlift-nes-master-handoff.tex:19:  ==> Fatal error occurred, no output PDF 
-file produced!
+ 74i,11n,83p,1216b,745s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</opt/texlive/texdir/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></opt/texliv
+e/texdir/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></opt/texlive/texdir/texmf
+-dist/fonts/type1/public/lm/lmmi10.pfb></opt/texlive/texdir/texmf-dist/fonts/ty
+pe1/public/lm/lmr10.pfb></opt/texlive/texdir/texmf-dist/fonts/type1/public/lm/l
+mr12.pfb></opt/texlive/texdir/texmf-dist/fonts/type1/public/lm/lmr17.pfb></opt/
+texlive/texdir/texmf-dist/fonts/type1/public/lm/lmr9.pfb></opt/texlive/texdir/t
+exmf-dist/fonts/type1/public/lm/lmri10.pfb></opt/texlive/texdir/texmf-dist/font
+s/type1/public/lm/lmsy10.pfb></opt/texlive/texdir/texmf-dist/fonts/type1/public
+/lm/lmtt12.pfb></opt/texlive/texdir/texmf-dist/fonts/type1/public/lm/lmtt8.pfb>
+</opt/texlive/texdir/texmf-dist/fonts/type1/public/lm/lmtt9.pfb></opt/texlive/t
+exdir/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on overlift-nes-master-handoff.pdf (13 pages, 329962 bytes).
+PDF statistics:
+ 402 PDF objects out of 1000 (max. 8388607)
+ 355 compressed objects within 4 object streams
+ 93 named destinations out of 1000 (max. 500000)
+ 35137 words of extra memory for PDF output out of 35830 (max. 10000000)
+
